@@ -11,8 +11,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |cluster|
 
   # Every Vagrant virtual environment requires a box to build off of.
 
+cluster.vm.define "ansible-node" do |config|
+  config.vm.box = "chef/centos-7.1"
+  config.ssh.insert_key = false
+  config.ssh.forward_agent = true
+  config.vm.provider :virtualbox do |vb, override|
+    vb.customize ["modifyvm", :id, "--memory", "128"]
+    vb.customize ["modifyvm", :id, "--cpus", "1"]
+  end
+  config.vm.hostname = "ansible-node"
+  config.vm.network :private_network, ip: "10.42.0.2"
+end
+
+
 cluster.vm.define "node-1" do |config|
-  config.vm.box = "chef/centos-6.5"
+  config.vm.box = "bento/centos-6.7"
   config.ssh.insert_key = false
   config.vm.provider :virtualbox do |vb, override|
     vb.customize ["modifyvm", :id, "--memory", "128"]
@@ -23,7 +36,7 @@ cluster.vm.define "node-1" do |config|
 end
 
 cluster.vm.define "node-2" do |config|
-  config.vm.box = "chef/centos-6.5"
+  config.vm.box = "bento/centos-6.7"
   config.ssh.insert_key = false
   config.vm.provider :virtualbox do |vb, override|
     vb.customize ["modifyvm", :id, "--memory", "128"]
@@ -34,7 +47,7 @@ cluster.vm.define "node-2" do |config|
 end
 
 cluster.vm.define "node-3" do |config|
-  config.vm.box = "chef/ubuntu-12.04"
+  config.vm.box = "bento/ubuntu-12.04"
   config.ssh.insert_key = false
   config.vm.provider :virtualbox do |vb, override|
     vb.customize ["modifyvm", :id, "--memory", "128"]
@@ -45,7 +58,7 @@ cluster.vm.define "node-3" do |config|
 end
 
 cluster.vm.define "haproxy" do |config|
-  config.vm.box = "chef/centos-6.5"
+  config.vm.box = "bento/centos-6.7"
   config.ssh.insert_key = false
   config.vm.provider :virtualbox do |vb, override|
     vb.customize ["modifyvm", :id, "--memory", "128"]
@@ -55,15 +68,4 @@ cluster.vm.define "haproxy" do |config|
   config.vm.network :private_network, ip: "10.42.0.100"
 end
 
-
-cluster.vm.define "tower" do |config|
-  config.vm.box = "chef/centos-6.5"
-  config.ssh.insert_key = false
-  config.vm.provider :virtualbox do |vb, override|
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
-    vb.customize ["modifyvm", :id, "--cpus", "1"]
-  end
-  config.vm.hostname = "tower"
-  config.vm.network :private_network, ip: "10.42.0.200"
-end
 end
