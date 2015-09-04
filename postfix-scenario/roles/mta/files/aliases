@@ -1,0 +1,6 @@
+# See man 5 aliases for format
+root: root
+admin: root
+webmaster: root
+abuse: root
+postmaster: root

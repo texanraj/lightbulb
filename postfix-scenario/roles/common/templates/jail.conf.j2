@@ -1,0 +1,141 @@
+[DEFAULT]
+
+ignoreip = 127.0.0.1 
+bantime  = 86400
+maxretry = 0
+
+backend = polling
+
+destemail = root@localhost
+
+banaction = iptables-multiport
+
+mta = sendmail
+
+protocol = tcp
+
+action_ = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s]
+
+action_mw = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s]
+              %(mta)s-whois[name=%(__name__)s, dest="%(destemail)s", protocol="%(protocol)s]
+
+action_mwl = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s]
+               %(mta)s-whois-lines[name=%(__name__)s, dest="%(destemail)s", logpath=%(logpath)s]
+ 
+action = %(action_)s
+
+[ssh]
+
+enabled = true
+port	= ssh
+filter	= sshd
+logpath  = /var/log/auth.log
+maxretry = 0
+
+[pam-generic]
+
+enabled = true
+filter	= pam-generic
+port = all
+banaction = iptables-allports
+port     = anyport
+logpath  = /var/log/auth.log
+maxretry = 6
+
+[xinetd-fail]
+
+enabled   = true
+filter    = xinetd-fail
+port      = all
+banaction = iptables-multiport-log
+logpath   = /var/log/daemon.log
+maxretry  = 2
+
+[ssh-ddos]
+
+enabled = true
+port    = ssh
+filter  = sshd-ddos
+logpath  = /var/log/auth.log
+maxretry = 0
+
+# ========================================================================
+# FIXME: The following section, until "END FIXME 1", should only
+# be included in the resulting templated config file if the current
+# host exists in the inventory group named "mta".
+
+[postfix]
+
+enabled  = true 
+port	 = 65530,65531
+filter   = postfix
+logpath  = /var/log/mail.log
+
+[dovecot-pop3imap]
+
+enabled = true
+filter = dovecot-pop3imap
+action = iptables-multiport[name=dovecot-pop3imap, port="65532", protocol=tcp]
+# optionaly mail notification # mail[name=dovecot-pop3imap, dest=root@domain] # see /etc/fail2ban/action.d/ or Fail2Ban doc
+logpath = /var/log/mail.log
+maxretry = 20
+findtime = 1200
+bantime = 86400 
+
+[sasl]
+
+enabled  = true
+port	 = 65530,65531,65532
+filter   = sasl
+# You might consider monitoring /var/log/warn.log instead
+# if you are running postfix. See http://bugs.debian.org/507990
+logpath  = /var/log/mail.log
+
+# END FIXME 1
+# ========================================================================
+# FIXME: This next section, until "END FIXME 2", should only be included
+# if the current server is in the "web" group.
+
+# This jail demonstrates the use of wildcards in "logpath".
+# Moreover, it is possible to give other files on a new line.
+[apache-tcpwrapper]
+
+enabled  = true
+filter	 = apache-auth
+action   = hostsdeny
+logpath  = /var/log/apache*/*error.log
+           /home/www/myhomepage/error.log
+maxretry = 6
+
+
+[apache-modsecurity]
+
+enabled  = true
+filter	 = apache-modsecurity
+action   = iptables-multiport[name=apache-modsecurity,port="80,443"]
+logpath  = /var/log/apache*/*error.log
+           /home/www/myhomepage/error.log
+maxretry = 2
+
+
+[apache-overflows]
+
+enabled  = true
+filter	 = apache-overflows
+action   = iptables-multiport[name=apache-overflows,port="80,443"]
+logpath  = /var/log/apache*/*error.log
+           /home/www/myhomepage/error.log
+maxretry = 2
+
+
+[apache-nohome]
+
+enabled  = true
+filter	 = apache-nohome
+action   = iptables-multiport[name=apache-nohome,port="80,443"]
+logpath  = /var/log/apache*/*error.log
+           /home/www/myhomepage/error.log
+maxretry = 2
+
+# END FIXME 2
+# ========================================================================

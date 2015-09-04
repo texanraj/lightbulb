@@ -1,0 +1,10 @@
+---
+# vars file for mta
+orgdomain: example.com
+mailname: mail.example.com
+mail_self_signed_cert_subj: "/C=US/ST=Texas/L=Austin/O=IT/CN={{ mailname }}"
+mail_ssl_certificate: "/etc/ssl/certs/smtpd.crt"
+mail_ssl_certificate_key: "/etc/ssl/private/smtpd.key"
+smtpd_port_1: 25
+smtpd_port_2: 587
+imaps_port: 993

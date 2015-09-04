@@ -1,0 +1,8 @@
+---
+# This playbook does a rolling update for all servers serially (one at a time).
+#
+
+- hosts: all
+  serial: 1
+
+  # These are the tasks to run before applying updates:

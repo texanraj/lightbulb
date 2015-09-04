@@ -1,0 +1,14 @@
+---
+mailusers:
+  - name: alice
+    rawpass: password12345
+    pass: /etc/shadow compat hash for password (see http://docs.ansible.com/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module )
+  - name: bob
+    rawpass: newpasswd0986
+    pass: /etc/shadow compat hash for password (see http://docs.ansible.com/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module )
+  - name: janice
+    rawpass: anotherpass26
+    pass: /etc/shadow compat hash for password (see http://docs.ansible.com/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module )
+  - name: timothy
+    rawpass: whatever45ff9
+    pass: /etc/shadow compat hash for password (see http://docs.ansible.com/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module )

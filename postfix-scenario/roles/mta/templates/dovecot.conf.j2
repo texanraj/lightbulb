@@ -1,0 +1,40 @@
+# 2.0.19: /etc/dovecot/dovecot.conf
+# OS: Linux 3.2.0-24-generic x86_64 Ubuntu 12.04 LTS 
+first_valid_gid = 1000
+first_valid_uid = 1000
+last_valid_gid = 2000
+last_valid_uid = 2000
+log_timestamp = "%Y-%m-%d %H:%M:%S "
+mail_privileged_group = mail
+mail_location = mbox:~/mail:INBOX=~/mail/inbox
+mail_max_userip_connections = 500
+passdb {
+  driver = pam
+}
+passdb {
+  driver = pam
+}
+protocols = imap
+service auth {
+  user = root
+}
+service imap-login {
+  inet_listener imap {
+    port = 0
+  }
+    inet_listener imaps {
+    port = 65532
+  }
+}
+ssl = yes
+ssl_cert = <{{ mail_ssl_certificate }}
+ssl_key = <{{ mail_ssl_certificate_key }}
+userdb {
+  driver = passwd
+}
+userdb {
+  driver = passwd
+}
+protocol pop3 {
+  pop3_uidl_format = %08Xu%08Xv
+}

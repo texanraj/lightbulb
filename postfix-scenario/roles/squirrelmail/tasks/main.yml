@@ -1,0 +1,11 @@
+---
+# tasks file for squirrelmail
+###FIX ME: Install apache, php5 and the imap libraries for php5
+
+###FIX ME: unarchive the included tarball for squirrelmail to the document root of apache
+
+###FIX ME: template the config.php file provided to the document root where you unarchived squirrelmail in the config folder.
+# for example: /docroot/config/config.php  
+# then call a handler to restart apache.
+
+###FIX ME: allow ports 80 and 443 in the firewall

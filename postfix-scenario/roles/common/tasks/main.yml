@@ -1,0 +1,16 @@
+---
+# FIXME: install three packages using the apt module:
+#        - fail2ban
+#        - ufw
+#        - ntp
+
+# FIXME: use the 'ufw' module to:
+#        1) enable ufw itself, and
+#        2) allow connections on port 22
+
+# FIXME: use template module to place the the provided ntp.conf.j2 template
+#        in /etc/ntp.conf, mode 0644, owned by root 
+
+# FIXME: use the template module to place the provided jail.conf.j2 template
+#        in /etc/fail2ban/jail.conf, mode 0644, owned by root. Use a handler
+#        to trigger a restart of the fail2ban service if the jail.conf file changes.
