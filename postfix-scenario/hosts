@@ -1,4 +1,0 @@
-[mta]
-node-1 ansible_ssh_host=10.42.0.6 ansible_ssh_private_key_file=.vagrant/machines/node-1/virtualbox/private_key
-[web]
-node-2 ansible_ssh_host=10.42.0.7 ansible_ssh_private_key_file=.vagrant/machines/node-2/virtualbox/private_key
