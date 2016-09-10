@@ -26,6 +26,17 @@ You can pick your starting point, and proceed progressively.  The order is:
 
 This is only a starting point.  Different progressions could happen at any one of these points and go in a different direction.
 
+## SSH Keys to add!
+
+You should execute the following on your host machine before you vagrant up your machines:
+
+```
+cd ~/.ssh 
+wget https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant
+chmod 400 vagrant
+ssh-add vagrant
+```
+
 **TODO**:
 
 * Make ec2 tagging configurable
